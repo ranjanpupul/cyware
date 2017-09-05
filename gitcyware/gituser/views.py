@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from django.contrib.auth.models import User
+from models import GitUser
 import json
 import urllib
 import requests
@@ -18,10 +19,10 @@ class ShowResult(APIView):
                 jljljl= []
                 searchresult={}
                 searchresult = requests.get('https://api.github.com/users')
-                for val in searchresult:
-                    jljljl.append(val)
+                for val in json.loads(searchresult._content):
+                    print val['id']
 
-                return HttpResponse(jljljl, content_type="application/json")
+                return HttpResponse(json.loads(searchresult._content), content_type="application/json")
 
             except Exception as e:
                 print e
