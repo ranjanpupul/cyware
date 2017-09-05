@@ -16,11 +16,15 @@ class ShowResult(APIView):
     def get(self, request):
         try:
             try:
-                jljljl= []
                 searchresult={}
                 searchresult = requests.get('https://api.github.com/users')
                 for val in json.loads(searchresult._content):
-                    print val['id']
+                	try:
+                	   	p, created = GitUser.objects.get_or_create(login=val['login'],user_id=val['id'],image=val['avatar_url'],followers_url=val['followers_url'],site_admin=val['site_admin'],repos_url=val['repos_url'],updated_by=1)
+                	   	p.save()
+                	except Exception as e:
+                		print e
+
 
                 return HttpResponse(json.loads(searchresult._content), content_type="application/json")
 
