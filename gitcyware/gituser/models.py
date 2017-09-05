@@ -22,7 +22,12 @@ class GitUser(models.Model):
 	def image_tag(self):
 		return u'<img src="%s" />' %  self.image
 
-	image_tag.short_description = 'Image'
+	def total_user(self):
+		all = GitUser.objects.all()
+		return all.count()
+
+
+	image_tag.short_description = 'User Image'
 	image_tag.allow_tags = True
 
 
